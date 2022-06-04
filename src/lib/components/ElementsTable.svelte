@@ -1,5 +1,5 @@
 <script>
-	export let criteraArray;
+	export let criteriaArray;
 	export let observedElements;
 </script>
 
@@ -7,14 +7,14 @@
 
 <table id="table_criteria">
 	<thead>
-		{#each criteraArray as criteria}
+		{#each criteriaArray as criteria}
 			<th>{criteria}</th>
 		{/each}
 	</thead>
 	<tbody>
 		{#each observedElements as element}
 			<tr>
-				{#each criteraArray as criteria}
+				{#each criteriaArray as criteria}
 					<td>{element[criteria] !== undefined ? element[criteria] : ''}</td>
 				{/each}
 			</tr>

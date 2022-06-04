@@ -1,17 +1,17 @@
 <script>
-	export let criteraArray;
+	export let criteriaArray;
 	export let observedElements;
 	export let currentObservedElementIndex;
 
 	/**
 	 * Turns name of a criteria from human-readable into HTML 'id' format for input fields.
 	 * e.g.: Camera (MP) -> input_camera_mp
-	 * @param normalCritera Normal name of what is to become 'id' attribute value.
+	 * @param criteriaName Normal name of what is to become 'id' attribute value.
 	 */
-	const giveHtmlValue = (normalCritera) => {
+	const giveHtmlValue = (criteriaName) => {
 		return (
 			'input_' +
-			normalCritera
+			criteriaName
 				.trim()
 				.replace(/\s/gi, '_')
 				.replace(/(\(|\))/gi, '')
@@ -20,7 +20,7 @@
 	};
 
 	const clearAllInputs = () => {
-		criteraArray.forEach((criteria) => {
+		criteriaArray.forEach((criteria) => {
 			document.querySelector(`#${giveHtmlValue(criteria)}`).value = '';
 		});
 	};
@@ -33,7 +33,7 @@
 	const saveCurrentElement = (event) => {
 		event.preventDefault();
 		const object = {};
-		criteraArray.forEach((criteria) => {
+		criteriaArray.forEach((criteria) => {
 			object[criteria] = document.querySelector(`#${giveHtmlValue(criteria)}`).value;
 		});
 
@@ -64,8 +64,8 @@
 		if (currentObservedElementIndex == observedElements.length) {
 			clearAllInputs();
 		} else {
-			criteraArray.forEach((criteria) => {
-				const currentCriteria = observedElements[currentObservedElementIndex][criteria];
+			criteriaArray.forEach((criteria) => {
+				let currentCriteria = observedElements[currentObservedElementIndex][criteria];
 
 				if (currentCriteria === undefined) {
 					currentCriteria = '';
@@ -104,12 +104,12 @@
 		}}>-&gt;</button
 	>
 	<br />
-	{#each criteraArray as criteria}
+	{#each criteriaArray as criteria}
 		<label for={giveHtmlValue(criteria)}>{criteria}: </label>
 		<input id={giveHtmlValue(criteria)} />
 		<br />
 	{/each}
-	{#if criteraArray.length > 0}
+	{#if criteriaArray.length > 0}
 		<button on:click={saveCurrentElement}>
 			{#if currentObservedElementIndex == observedElements.length}
 				Dodaj novi element u tablicu

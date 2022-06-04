@@ -1,12 +1,12 @@
 <script>
-	export let criteraArray;
+	export let criteriaArray;
 
 	let currentNewCriteria = '';
 
 	const addNewElement = (e) => {
 		e.preventDefault();
 		if (currentNewCriteria !== '') {
-			criteraArray = [...criteraArray, currentNewCriteria];
+			criteriaArray = [...criteriaArray, currentNewCriteria];
 			currentNewCriteria = '';
 		}
 	};

@@ -7,12 +7,12 @@
 	import testCriterias from '../lib/data/testCriterias.json';
 	import testPhones from '../lib/data/testPhones.json';
 
-	let criteraArray = ['Naziv'];
+	let criteriaArray = ['Naziv'];
 	let observedElements = [];
 	let currentObservedElementIndex = 0;
 
 	const loadTestValues = () => {
-		criteraArray = testCriterias;
+		criteriaArray = testCriterias;
 		observedElements = testPhones;
 		currentObservedElementIndex = observedElements.length;
 	};
@@ -27,11 +27,11 @@
 
 <button on:click={loadTestValues}> Učitaj testne vrijednosti </button>
 
-<CriteriaInput bind:criteraArray />
+<CriteriaInput bind:criteriaArray />
 
-<ElementForm bind:criteraArray bind:observedElements bind:currentObservedElementIndex />
+<ElementForm bind:criteriaArray bind:observedElements bind:currentObservedElementIndex />
 
 {#if observedElements.length > 0}
-	<ElementsTable bind:criteraArray bind:observedElements />
+	<ElementsTable bind:criteriaArray bind:observedElements />
 	<DeleteElement bind:observedElements bind:currentObservedElementIndex />
 {/if}
