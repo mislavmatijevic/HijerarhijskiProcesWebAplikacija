@@ -16,6 +16,8 @@
 
 		if (trenutnaVrijednost < 0) {
 			trenutnaVrijednost = 0;
+		} else if (trenutnaVrijednost > vrijednosti.length) {
+			trenutnaVrijednost = vrijednosti.length;
 		}
 
 		if (trenutnaVrijednost == vrijednosti.length) {
@@ -28,8 +30,13 @@
 
 	const uskladiInputeZaTrenutniElement = () => {
 		kriteriji.forEach((kriterij) => {
-			document.querySelector(`#${dajHtmlNaziv(kriterij)}`).value =
-				vrijednosti[trenutnaVrijednost][kriterij];
+			const trenutniKriterij = vrijednosti[trenutnaVrijednost][kriterij];
+
+			if (trenutniKriterij === undefined) {
+				trenutniKriterij = '';
+			}
+
+			document.querySelector(`#${dajHtmlNaziv(kriterij)}`).value = trenutniKriterij;
 		});
 	};
 </script>
@@ -105,7 +112,7 @@
 			{#each vrijednosti as vrijednost}
 				<tr>
 					{#each kriteriji as kriterij}
-						<td>{vrijednost[kriterij]}</td>
+						<td>{vrijednost[kriterij] !== undefined ? vrijednost[kriterij] : ''}</td>
 					{/each}
 				</tr>
 			{/each}
