@@ -3,6 +3,8 @@
 	let observedElements = [];
 	let currentObservedElementIndex = 0;
 
+	import CriteriaInput from './CriteriaInput.svelte';
+
 	/**
 	 * Turns name of a criteria from human-readable into HTML 'id' format for input fields.
 	 * e.g.: Camera (MP) -> input_camera_mp
@@ -69,17 +71,7 @@
 	>.
 </p>
 
-<form>
-	<input id="input_criteria" />
-	<button
-		on:click={(e) => {
-			e.preventDefault();
-			criteraArray = [...criteraArray, document.querySelector('#input_criteria').value];
-		}}
-	>
-		Dodaj kriterij
-	</button>
-</form>
+<CriteriaInput bind:criteraArray />
 
 <form>
 	<h2>
