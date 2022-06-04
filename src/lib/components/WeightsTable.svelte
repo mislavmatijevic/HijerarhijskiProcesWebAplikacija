@@ -23,6 +23,9 @@
 			pairComparisonName = getCurrentComparisonName(criteriaTwo, criteriaOne);
 			intensityValue = 1 / criteriaPairwiseImportance[pairComparisonName]?.intensity;
 			intensityValue = parseFloat(intensityValue.toFixed(2));
+			if (criteriaPairwiseImportance[pairComparisonName]?.intensity < 1) {
+				intensityValue = Math.round(intensityValue);
+			}
 		}
 
 		return intensityValue;
