@@ -10,6 +10,18 @@
 	let criteriaArray = ['Naziv'];
 	let observedElements = [];
 	let currentObservedElementIndex = 0;
+	try {
+		criteriaArray = JSON.parse(localStorage.getItem('criteriaArray')) ?? ['Naziv'];
+		observedElements = JSON.parse(localStorage.getItem('observedElements')) ?? [];
+		currentObservedElementIndex = observedElements.length;
+	} catch (error) {}
+
+	const deleteValues = () => {
+		localStorage.clear();
+		criteriaArray = ['Naziv'];
+		observedElements = [];
+		currentObservedElementIndex = 0;
+	};
 
 	const loadTestValues = () => {
 		criteriaArray = testCriterias;
@@ -30,6 +42,7 @@
 	>.
 </p>
 
+<button on:click={deleteValues}> Izbriši sve vrijednosti </button>
 <button on:click={loadTestValues}> Učitaj testne vrijednosti </button>
 
 <CriteriaInput bind:criteriaArray />
@@ -39,5 +52,5 @@
 {#if observedElements.length > 0}
 	<ElementsTable bind:criteriaArray bind:observedElements />
 	<DeleteElement bind:observedElements bind:currentObservedElementIndex />
-	<a href="/weights" on:click={saveArrays}>Nastavak na odabir prioriteta...</a>
+	<a href="/weights" on:click={saveArrays}>Pohrani i nastavi na odabir prioriteta...</a>
 {/if}
