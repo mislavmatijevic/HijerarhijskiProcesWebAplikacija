@@ -16,6 +16,11 @@
 		observedElements = testPhones;
 		currentObservedElementIndex = observedElements.length;
 	};
+
+	const saveArrays = () => {
+		localStorage.setItem('criteriaArray', JSON.stringify(criteriaArray));
+		localStorage.setItem('observedElements', JSON.stringify(observedElements));
+	};
 </script>
 
 <h1>Analitički hijerarhijski proces</h1>
@@ -34,4 +39,5 @@
 {#if observedElements.length > 0}
 	<ElementsTable bind:criteriaArray bind:observedElements />
 	<DeleteElement bind:observedElements bind:currentObservedElementIndex />
+	<a href="/weights" on:click={saveArrays}>Nastavak na odabir prioriteta...</a>
 {/if}
