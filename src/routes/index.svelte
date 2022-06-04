@@ -1,6 +1,7 @@
 <script>
 	import CriteriaInput from '../lib/components/CriteriaInput.svelte';
 	import ElementForm from '../lib/components/ElementForm.svelte';
+	import ElementsTable from '../lib/components/ElementsTable.svelte';
 
 	let criteraArray = ['Naziv'];
 	let observedElements = [];
@@ -19,24 +20,7 @@
 <ElementForm bind:criteraArray bind:observedElements bind:currentObservedElementIndex />
 
 {#if observedElements.length > 0}
-	<h2>Tablica</h2>
-
-	<table id="table_criteria">
-		<thead>
-			{#each criteraArray as criteria}
-				<th>{criteria}</th>
-			{/each}
-		</thead>
-		<tbody>
-			{#each observedElements as element}
-				<tr>
-					{#each criteraArray as criteria}
-						<td>{element[criteria] !== undefined ? element[criteria] : ''}</td>
-					{/each}
-				</tr>
-			{/each}
-		</tbody>
-	</table>
+	<ElementsTable bind:criteraArray bind:observedElements />
 
 	<form>
 		<input id="input_deletion" />
