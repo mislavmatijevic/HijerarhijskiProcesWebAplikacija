@@ -103,3 +103,19 @@
 		{/each}
 	</tbody>
 </table>
+
+{#if vrijednosti.length > 0}
+	<form>
+		<input id="input_brisanje" />
+		<button
+			on:click={(e) => {
+				e.preventDefault();
+				const indeksBrisanje = document.querySelector('#input_brisanje').value;
+				if (indeksBrisanje !== undefined && indeksBrisanje >= 0) {
+					vrijednosti.splice(indeksBrisanje, 1);
+					vrijednosti = [...vrijednosti];
+				}
+			}}>Izbriši element (0-{vrijednosti.length - 1})</button
+		>
+	</form>
+{/if}
