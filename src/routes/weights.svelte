@@ -32,8 +32,10 @@
 						]}
 					>
 						{#each intensityOfRelativeImportance as importanceValue, index}
-							{#if index === 5}
-								<optgroup />
+							{#if index === 0}
+								<optgroup label="Normalno" />
+							{:else if index === 9}
+								<optgroup label="Recipročno" />
 							{/if}
 							<option value={importanceValue} on:click={() => (criteriaArray = [...criteriaArray])}
 								>{importanceValue.definition} ({importanceValue.intensity})</option

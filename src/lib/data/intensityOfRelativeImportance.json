@@ -4,35 +4,67 @@
         "definition": "Jednako važno"
     },
     {
-        "intensity": 3,
-        "definition": "Umjereno važnije"
-    },
-    {
-        "intensity": 5,
-        "definition": "Strogo važnije"
-    },
-    {
-        "intensity": 7,
-        "definition": "Vrlo strogo važnije"
-    },
-    {
-        "intensity": 9,
-        "definition": "Ekstremno važnije"
-    },
-    {
         "intensity": 2,
         "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 3,
+        "definition": "Umjereno važnije"
     },
     {
         "intensity": 4,
         "definition": "Međuvrijednost"
     },
     {
+        "intensity": 5,
+        "definition": "Strogo važnije"
+    },
+    {
         "intensity": 6,
         "definition": "Međuvrijednost"
     },
     {
+        "intensity": 7,
+        "definition": "Vrlo strogo važnije"
+    },
+    {
         "intensity": 8,
         "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 9,
+        "definition": "Ekstremno važnije"
+    },
+    {
+        "intensity": 0.5,
+        "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 0.33,
+        "definition": "Umjereno nevažno"
+    },
+    {
+        "intensity": 0.25,
+        "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 0.2,
+        "definition": "Strogo nevažno"
+    },
+    {
+        "intensity": 0.17,
+        "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 0.14,
+        "definition": "Vrlo strogo nevažno"
+    },
+    {
+        "intensity": 0.13,
+        "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 0.11,
+        "definition": "Ekstremno nevažno"
     }
 ]
