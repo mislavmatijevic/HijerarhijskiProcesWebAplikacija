@@ -41,10 +41,17 @@
 	>.
 </p>
 
-<input id="txtKriterij" />
-<button on:click={() => (kriteriji = [...kriteriji, document.querySelector('#txtKriterij').value])}>
-	Dodaj kriterij
-</button>
+<form>
+	<input id="txtKriterij" />
+	<button
+		on:click={(e) => {
+			e.preventDefault();
+			kriteriji = [...kriteriji, document.querySelector('#txtKriterij').value];
+		}}
+	>
+		Dodaj kriterij
+	</button>
+</form>
 
 <form>
 	<h2>
