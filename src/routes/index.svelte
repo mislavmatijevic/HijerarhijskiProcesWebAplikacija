@@ -1,5 +1,6 @@
 <script>
 	import CriteriaInput from '../lib/components/CriteriaInput.svelte';
+	import DeleteElement from '../lib/components/DeleteElement.svelte';
 	import ElementForm from '../lib/components/ElementForm.svelte';
 	import ElementsTable from '../lib/components/ElementsTable.svelte';
 
@@ -21,18 +22,5 @@
 
 {#if observedElements.length > 0}
 	<ElementsTable bind:criteraArray bind:observedElements />
-
-	<form>
-		<input id="input_deletion" />
-		<button
-			on:click={(e) => {
-				e.preventDefault();
-				const indexForDeletion = document.querySelector('#input_deletion').value;
-				if (indexForDeletion !== undefined && indexForDeletion >= 0) {
-					observedElements.splice(indexForDeletion, 1);
-					observedElements = [...observedElements];
-				}
-			}}>Izbriši element (0-{observedElements.length - 1})</button
-		>
-	</form>
+	<DeleteElement bind:observedElements bind:currentObservedElementIndex />
 {/if}
