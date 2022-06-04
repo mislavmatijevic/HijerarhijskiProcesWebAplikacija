@@ -1,17 +1,17 @@
 <script>
-	let kriteriji = ['Naziv'];
-	let vrijednosti = [];
-	let trenutnaVrijednost = 0;
+	let criteraArray = ['Naziv'];
+	let observedElements = [];
+	let currentObservedElementIndex = 0;
 
 	/**
-	 * Pretvara naziv kriterija iz ljudskog u HTML 'id' format.
-	 * Npr.: Kamera (MP) -> input_kamera_mp
-	 * @param znakovniNiz Normalan naziv onoga što će postati HTML 'id' oznaka.
+	 * Turns name of a criteria from human-readable into HTML 'id' format for input fields.
+	 * e.g.: Camera (MP) -> input_camera_mp
+	 * @param normalCritera Normal name of what is to become 'id' attribute value.
 	 */
-	const dajHtmlNaziv = (znakovniNiz) => {
+	const giveHtmlValue = (normalCritera) => {
 		return (
 			'input_' +
-			znakovniNiz
+			normalCritera
 				.trim()
 				.replace(/\s/gi, '_')
 				.replace(/(\(|\))/gi, '')
@@ -19,36 +19,45 @@
 		);
 	};
 
-	const pohraniVrijednost = (event) => {
+	/**
+	 * Creates a new object according to existing attributes and entered attribute names.
+	 * Saves object into 'observedElements' array.
+	 * @param event Event from form's submit button.
+	 */
+	const saveCurrentElement = (event) => {
 		event.preventDefault();
-		const novaVrijednost = {};
-		kriteriji.forEach((kriterij) => {
-			novaVrijednost[kriterij] = document.querySelector(`#${dajHtmlNaziv(kriterij)}`).value;
+		const object = {};
+		criteraArray.forEach((criteria) => {
+			object[criteria] = document.querySelector(`#${giveHtmlValue(criteria)}`).value;
 		});
 
-		if (trenutnaVrijednost < 0) {
-			trenutnaVrijednost = 0;
-		} else if (trenutnaVrijednost > vrijednosti.length) {
-			trenutnaVrijednost = vrijednosti.length;
+		if (currentObservedElementIndex < 0) {
+			currentObservedElementIndex = 0;
+		} else if (currentObservedElementIndex > observedElements.length) {
+			currentObservedElementIndex = observedElements.length;
 		}
 
-		if (trenutnaVrijednost == vrijednosti.length) {
-			vrijednosti = [...vrijednosti, novaVrijednost];
-			trenutnaVrijednost = vrijednosti.length;
-		} else if (trenutnaVrijednost < vrijednosti.length) {
-			vrijednosti[trenutnaVrijednost] = novaVrijednost;
+		if (currentObservedElementIndex == observedElements.length) {
+			observedElements = [...observedElements, object];
+			currentObservedElementIndex = observedElements.length;
+		} else if (currentObservedElementIndex < observedElements.length) {
+			observedElements[currentObservedElementIndex] = object;
 		}
 	};
 
-	const uskladiInputeZaTrenutniElement = () => {
-		kriteriji.forEach((kriterij) => {
-			const trenutniKriterij = vrijednosti[trenutnaVrijednost][kriterij];
+	/**
+	 * Fills input values with current element's values.
+	 * Serves to show user data of currently selected object.
+	 */
+	const bindInputsWithCurrentElement = () => {
+		criteraArray.forEach((criteria) => {
+			const currentCriteria = observedElements[currentObservedElementIndex][criteria];
 
-			if (trenutniKriterij === undefined) {
-				trenutniKriterij = '';
+			if (currentCriteria === undefined) {
+				currentCriteria = '';
 			}
 
-			document.querySelector(`#${dajHtmlNaziv(kriterij)}`).value = trenutniKriterij;
+			document.querySelector(`#${giveHtmlValue(criteria)}`).value = currentCriteria;
 		});
 	};
 </script>
@@ -61,11 +70,11 @@
 </p>
 
 <form>
-	<input id="txtKriterij" />
+	<input id="input_criteria" />
 	<button
 		on:click={(e) => {
 			e.preventDefault();
-			kriteriji = [...kriteriji, document.querySelector('#txtKriterij').value];
+			criteraArray = [...criteraArray, document.querySelector('#input_criteria').value];
 		}}
 	>
 		Dodaj kriterij
@@ -74,61 +83,61 @@
 
 <form>
 	<h2>
-		{#if trenutnaVrijednost == vrijednosti.length}
+		{#if currentObservedElementIndex == observedElements.length}
 			Nova
 		{:else}
-			{trenutnaVrijednost + 1}
+			{currentObservedElementIndex + 1}
 		{/if} vrijednost
 	</h2>
 	<button
 		on:click={(e) => {
 			e.preventDefault();
-			if (trenutnaVrijednost > 0) {
-				trenutnaVrijednost--;
-				uskladiInputeZaTrenutniElement();
+			if (currentObservedElementIndex > 0) {
+				currentObservedElementIndex--;
+				bindInputsWithCurrentElement();
 			}
 		}}>&lt;-</button
 	>
 	<button
 		on:click={(e) => {
 			e.preventDefault();
-			if (trenutnaVrijednost < vrijednosti.length) {
-				trenutnaVrijednost++;
-				uskladiInputeZaTrenutniElement();
+			if (currentObservedElementIndex < observedElements.length) {
+				currentObservedElementIndex++;
+				bindInputsWithCurrentElement();
 			}
 		}}>-&gt;</button
 	>
 	<br />
-	{#each kriteriji as kriterij}
-		<label for={dajHtmlNaziv(kriterij)}>{kriterij}: </label>
-		<input id={dajHtmlNaziv(kriterij)} />
+	{#each criteraArray as criteria}
+		<label for={giveHtmlValue(criteria)}>{criteria}: </label>
+		<input id={giveHtmlValue(criteria)} />
 		<br />
 	{/each}
-	{#if kriteriji.length > 0}
-		<button on:click={pohraniVrijednost}>
-			{#if trenutnaVrijednost == vrijednosti.length}
+	{#if criteraArray.length > 0}
+		<button on:click={saveCurrentElement}>
+			{#if currentObservedElementIndex == observedElements.length}
 				Dodaj novi element u tablicu
 			{:else}
-				Pohrani {trenutnaVrijednost + 1} element.
+				Pohrani {currentObservedElementIndex + 1} element.
 			{/if} vrijednost
 		</button>
 	{/if}
 </form>
 
-{#if vrijednosti.length > 0}
+{#if observedElements.length > 0}
 	<h2>Tablica</h2>
 
-	<table id="tablicaKriterija">
+	<table id="table_criteria">
 		<thead>
-			{#each kriteriji as kriterij}
-				<th>{kriterij}</th>
+			{#each criteraArray as criteria}
+				<th>{criteria}</th>
 			{/each}
 		</thead>
 		<tbody>
-			{#each vrijednosti as vrijednost}
+			{#each observedElements as element}
 				<tr>
-					{#each kriteriji as kriterij}
-						<td>{vrijednost[kriterij] !== undefined ? vrijednost[kriterij] : ''}</td>
+					{#each criteraArray as criteria}
+						<td>{element[criteria] !== undefined ? element[criteria] : ''}</td>
 					{/each}
 				</tr>
 			{/each}
@@ -136,16 +145,16 @@
 	</table>
 
 	<form>
-		<input id="input_brisanje" />
+		<input id="input_deletion" />
 		<button
 			on:click={(e) => {
 				e.preventDefault();
-				const indeksBrisanje = document.querySelector('#input_brisanje').value;
-				if (indeksBrisanje !== undefined && indeksBrisanje >= 0) {
-					vrijednosti.splice(indeksBrisanje, 1);
-					vrijednosti = [...vrijednosti];
+				const indexForDeletion = document.querySelector('#input_deletion').value;
+				if (indexForDeletion !== undefined && indexForDeletion >= 0) {
+					observedElements.splice(indexForDeletion, 1);
+					observedElements = [...observedElements];
 				}
-			}}>Izbriši element (0-{vrijednosti.length - 1})</button
+			}}>Izbriši element (0-{observedElements.length - 1})</button
 		>
 	</form>
 {/if}
