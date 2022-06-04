@@ -1,0 +1,38 @@
+[
+    {
+        "intensity": 1,
+        "definition": "Jednako važno"
+    },
+    {
+        "intensity": 3,
+        "definition": "Umjereno važnije"
+    },
+    {
+        "intensity": 5,
+        "definition": "Strogo važnije"
+    },
+    {
+        "intensity": 7,
+        "definition": "Vrlo strogo važnije"
+    },
+    {
+        "intensity": 9,
+        "definition": "Ekstremno važnije"
+    },
+    {
+        "intensity": 2,
+        "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 4,
+        "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 6,
+        "definition": "Međuvrijednost"
+    },
+    {
+        "intensity": 8,
+        "definition": "Međuvrijednost"
+    }
+]
