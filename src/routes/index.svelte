@@ -85,26 +85,26 @@
 	{/if}
 </form>
 
-<h2>Tablica</h2>
-
-<table id="tablicaKriterija">
-	<thead>
-		{#each kriteriji as kriterij}
-			<th>{kriterij}</th>
-		{/each}
-	</thead>
-	<tbody>
-		{#each vrijednosti as vrijednost}
-			<tr>
-				{#each kriteriji as kriterij}
-					<td>{vrijednost[kriterij]}</td>
-				{/each}
-			</tr>
-		{/each}
-	</tbody>
-</table>
-
 {#if vrijednosti.length > 0}
+	<h2>Tablica</h2>
+
+	<table id="tablicaKriterija">
+		<thead>
+			{#each kriteriji as kriterij}
+				<th>{kriterij}</th>
+			{/each}
+		</thead>
+		<tbody>
+			{#each vrijednosti as vrijednost}
+				<tr>
+					{#each kriteriji as kriterij}
+						<td>{vrijednost[kriterij]}</td>
+					{/each}
+				</tr>
+			{/each}
+		</tbody>
+	</table>
+
 	<form>
 		<input id="input_brisanje" />
 		<button
