@@ -1,27 +1,12 @@
 <script>
+	import { getHtmlTagName } from './../functions/getHtmlTagName.js';
 	export let criteriaArray;
 	export let observedElements;
 	export let currentObservedElementIndex;
 
-	/**
-	 * Turns name of a criteria from human-readable into HTML 'id' format for input fields.
-	 * e.g.: Camera (MP) -> input_camera_mp
-	 * @param criteriaName Normal name of what is to become 'id' attribute value.
-	 */
-	const giveHtmlValue = (criteriaName) => {
-		return (
-			'input_' +
-			criteriaName
-				.trim()
-				.replace(/\s/gi, '_')
-				.replace(/(\(|\))/gi, '')
-				.toLowerCase()
-		);
-	};
-
 	const clearAllInputs = () => {
 		criteriaArray.forEach((criteria) => {
-			document.querySelector(`#${giveHtmlValue(criteria)}`).value = '';
+			document.querySelector(`#${getHtmlTagName(criteria)}`).value = '';
 		});
 	};
 
@@ -34,7 +19,7 @@
 		event.preventDefault();
 		const object = {};
 		criteriaArray.forEach((criteria) => {
-			object[criteria] = document.querySelector(`#${giveHtmlValue(criteria)}`).value;
+			object[criteria] = document.querySelector(`#${getHtmlTagName(criteria)}`).value;
 		});
 
 		if (currentObservedElementIndex < 0) {
@@ -71,7 +56,7 @@
 					currentCriteria = '';
 				}
 
-				document.querySelector(`#${giveHtmlValue(criteria)}`).value = currentCriteria;
+				document.querySelector(`#${getHtmlTagName(criteria)}`).value = currentCriteria;
 			});
 		}
 	};
@@ -105,8 +90,8 @@
 	>
 	<br />
 	{#each criteriaArray as criteria}
-		<label for={giveHtmlValue(criteria)}>{criteria}: </label>
-		<input id={giveHtmlValue(criteria)} />
+		<label for={getHtmlTagName(criteria)}>{criteria}: </label>
+		<input id={getHtmlTagName(criteria)} />
 		<br />
 	{/each}
 	{#if criteriaArray.length > 0}
