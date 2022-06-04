@@ -83,15 +83,19 @@
 	<button
 		on:click={(e) => {
 			e.preventDefault();
-			trenutnaVrijednost > 0 && trenutnaVrijednost--;
-			uskladiInputeZaTrenutniElement();
+			if (trenutnaVrijednost > 0) {
+				trenutnaVrijednost--;
+				uskladiInputeZaTrenutniElement();
+			}
 		}}>&lt;-</button
 	>
 	<button
 		on:click={(e) => {
 			e.preventDefault();
-			trenutnaVrijednost < vrijednosti.length && trenutnaVrijednost++;
-			uskladiInputeZaTrenutniElement();
+			if (trenutnaVrijednost < vrijednosti.length) {
+				trenutnaVrijednost++;
+				uskladiInputeZaTrenutniElement();
+			}
 		}}>-&gt;</button
 	>
 	<br />
