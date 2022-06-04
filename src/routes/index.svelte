@@ -1,10 +1,10 @@
 <script>
+	import CriteriaInput from '../lib/components/CriteriaInput.svelte';
+	import ElementForm from '../lib/components/ElementForm.svelte';
+
 	let criteraArray = ['Naziv'];
 	let observedElements = [];
 	let currentObservedElementIndex = 0;
-
-	import CriteriaInput from './CriteriaInput.svelte';
-	import ElementForm from './ElementForm.svelte';
 </script>
 
 <h1>Analitički hijerarhijski proces</h1>
