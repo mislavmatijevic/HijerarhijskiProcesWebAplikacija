@@ -91,7 +91,7 @@
 	<br />
 	{#each criteriaArray as criteria}
 		<label for={getHtmlTagName(criteria)}>{criteria}: </label>
-		<input id={getHtmlTagName(criteria)} />
+		<input id={getHtmlTagName(criteria)} type="number" />
 		<br />
 	{/each}
 	{#if criteriaArray.length > 0}
