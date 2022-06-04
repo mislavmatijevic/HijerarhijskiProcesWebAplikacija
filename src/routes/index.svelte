@@ -1,61 +1,61 @@
 <script>
-    let kriteriji = [];
-    let abc = "";
+	let kriteriji = ['Naziv'];
+	let vrijednosti = [];
+
+	const dajHtmlNaziv = (znakovniNiz) => {
+		return 'input_' + znakovniNiz.trim().replace(' ', '_').toLowerCase();
+	};
+
+	const pohraniNovuVrijednost = (event) => {
+		event.preventDefault();
+		const novaVrijednost = {};
+		kriteriji.forEach((kriterij) => {
+			novaVrijednost[kriterij] = document.querySelector(`#${dajHtmlNaziv(kriterij)}`).value;
+		});
+		console.log(novaVrijednost);
+		vrijednosti = [...vrijednosti, novaVrijednost];
+	};
 </script>
 
 <h1>Analitički hijerarhijski proces</h1>
-<p>Ovaj projekt dostupan je na repozitoriju <a href="https://github.com/mislavmatijevic/HijerarhijskiProcesWebAplikacija">na GitHub-u</a>.</p>
+<p>
+	Ovaj projekt dostupan je na repozitoriju <a
+		href="https://github.com/mislavmatijevic/HijerarhijskiProcesWebAplikacija">na GitHub-u</a
+	>.
+</p>
 
-<input id="txtKriterij" on:change={(e) => abc = e.target.value} />
-<button on:click={() => kriteriji = [...kriteriji, document.querySelector("#txtKriterij").value]}>Dodaj kriterij</button>
+<input id="txtKriterij" />
+<button on:click={() => (kriteriji = [...kriteriji, document.querySelector('#txtKriterij').value])}>
+	Dodaj kriterij
+</button>
 
-<span>{abc}</span>
+<form>
+	<h2>Nova vrijednost</h2>
+	{#each kriteriji as kriterij}
+		<label for={dajHtmlNaziv(kriterij)}>{kriterij}: </label>
+		<input id={dajHtmlNaziv(kriterij)} />
+		<br />
+	{/each}
+	{#if kriteriji.length > 0}
+		<button on:click={pohraniNovuVrijednost}>Dodaj novi element u tablicu</button>
+	{/if}
+</form>
+
+<h2>Tablica</h2>
 
 <table id="tablicaKriterija">
-    <thead>
-        <!-- {@html kriteriji.map(value => "<th>"+value+"</th>")} -->
-        <th>Atribut</th>
-        <th>Cijena</th>
-        <th>Prostor</th>
-        <th>Kamera</th>
-        <th>Izgled</th>
-    </thead>
-    <tbody>
-        <!-- {@html kriteriji.map(() => "<tr>Neka vrijednost</tr>")} -->
-        <tr>
-            <td>Mobile 1</td>
-            <td>$250</td>
-            <td>16 GB</td>
-            <td>12 MP</td>
-            <td>5</td>
-        </tr>
-        <tr>
-            <td>Mobile 2</td>
-            <td>$200</td>
-            <td>16 GB</td>
-            <td>8 MP</td>
-            <td>3</td>
-        </tr>
-        <tr>
-            <td>Mobile 3</td>
-            <td>$300</td>
-            <td>32 GB</td>
-            <td>16 MP</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>Mobile 4</td>
-            <td>$275</td>
-            <td>32 GB</td>
-            <td>8 MP</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>Mobile 5</td>
-            <td>$225</td>
-            <td>16 GB</td>
-            <td>16 MP</td>
-            <td>2</td>
-        </tr>
-    </tbody>
+	<thead>
+		{#each kriteriji as kriterij}
+			<th>{kriterij}</th>
+		{/each}
+	</thead>
+	<tbody>
+		{#each vrijednosti as vrijednost}
+			<tr>
+				{#each kriteriji as kriterij}
+					<td>{vrijednost[kriterij]}</td>
+				{/each}
+			</tr>
+		{/each}
+	</tbody>
 </table>
