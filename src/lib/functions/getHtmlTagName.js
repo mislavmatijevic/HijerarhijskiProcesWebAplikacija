@@ -9,7 +9,7 @@ export const getHtmlTagName = (criteriaName) => {
 		criteriaName
 			.trim()
 			.replace(/\s/gi, '_')
-			.replace(/(\(|\))/gi, '')
+			.replace(/([^a-zA-Z0-9])/gi, '')
 			.toLowerCase()
 	);
 };
