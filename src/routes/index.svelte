@@ -3,8 +3,20 @@
 	let vrijednosti = [];
 	let trenutnaVrijednost = 0;
 
+	/**
+	 * Pretvara naziv kriterija iz ljudskog u HTML 'id' format.
+	 * Npr.: Kamera (MP) -> input_kamera_mp
+	 * @param znakovniNiz Normalan naziv onoga što će postati HTML 'id' oznaka.
+	 */
 	const dajHtmlNaziv = (znakovniNiz) => {
-		return 'input_' + znakovniNiz.trim().replace(' ', '_').toLowerCase();
+		return (
+			'input_' +
+			znakovniNiz
+				.trim()
+				.replace(/\s/gi, '_')
+				.replace(/(\(|\))/gi, '')
+				.toLowerCase()
+		);
 	};
 
 	const pohraniVrijednost = (event) => {
