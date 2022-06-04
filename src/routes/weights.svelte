@@ -1,14 +1,14 @@
 <script>
-	import { getHtmlTagName } from '../lib/functions/getHtmlTagName';
+	import { getCurrentComparisonName, getHtmlTagName } from '../lib/functions/nameParsing';
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
+	import WeightsTable from '../lib/components/WeightsTable.svelte';
 
 	let criteriaArray;
 	try {
 		criteriaArray = JSON.parse(localStorage.getItem('criteriaArray'));
 	} catch {}
 
-	const getCurrentComparisonName = (criteriaMain, criteriaComparison) =>
-		getHtmlTagName(criteriaMain) + '_' + getHtmlTagName(criteriaComparison);
+	let criteriaPairwiseImportance = {};
 </script>
 
 <h1>Određivanje prioriteta kriterija</h1>
@@ -27,12 +27,17 @@
 					>
 					<select
 						id={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
+						bind:value={criteriaPairwiseImportance[
+							getCurrentComparisonName(criteriaMain, criteriaComparison)
+						]}
 					>
 						{#each intensityOfRelativeImportance as importanceValue, index}
 							{#if index === 5}
 								<optgroup />
 							{/if}
-							<option>{importanceValue.definition} ({importanceValue.intensity})</option>
+							<option value={importanceValue} on:click={() => (criteriaArray = [...criteriaArray])}
+								>{importanceValue.definition} ({importanceValue.intensity})</option
+							>
 						{/each}
 					</select>
 					<br />
@@ -40,5 +45,6 @@
 			{/each}
 		{/if}
 	{/each}
+	<WeightsTable bind:criteriaArray bind:criteriaPairwiseImportance />
 {/if}
 <!-- Loaded content -->

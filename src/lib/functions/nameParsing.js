@@ -13,3 +13,6 @@ export const getHtmlTagName = (criteriaName) => {
 			.toLowerCase()
 	);
 };
+
+export const getCurrentComparisonName = (criteriaMain, criteriaComparison) =>
+	getHtmlTagName(criteriaMain) + '_' + getHtmlTagName(criteriaComparison);
