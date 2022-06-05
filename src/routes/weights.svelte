@@ -2,7 +2,7 @@
 	import { calculatePairwiseMatrix } from './../lib/functions/matrixCalculations.js';
 	import { getCurrentComparisonName } from '../lib/functions/nameParsing';
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
-	import WeightsTable from '../lib/components/WeightsTable.svelte';
+	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
 
 	let criteriaArray;
 	let pairsCount = 0;
@@ -15,7 +15,7 @@
 	try {
 		criteriaArray = JSON.parse(localStorage.getItem('criteriaArray'));
 
-		// Wait for all criterias to get ready before displaying the bottom 'WeightsTable'.
+		// Wait for all criterias to get ready before displaying the bottom 'PairWiseComparisonMatrix'.
 		criteriaArray.forEach((criteriaUpper, indexUpper) => {
 			if (indexUpper !== 0)
 				criteriaArray.forEach((criteriaLower, indexLower) => {
@@ -81,7 +81,7 @@
 		{/if}
 	{/each}
 	{#if pairsCount !== 0 && Object.keys(criteriaPairwiseImportance).length === pairsCount}
-		<WeightsTable bind:criteriaArray bind:matrix />
+		<PairWiseComparisonMatrix bind:criteriaArray bind:matrix />
 	{/if}
 {/if}
 <!-- Loaded content -->
