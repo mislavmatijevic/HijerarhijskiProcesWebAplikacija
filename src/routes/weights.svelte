@@ -40,7 +40,6 @@
 	 */
 	const refreshMatrix = () => {
 		matrix = calculatePairwiseMatrix(criteriaArray, criteriaPairwiseImportance);
-		console.log(matrix);
 	};
 </script>
 
