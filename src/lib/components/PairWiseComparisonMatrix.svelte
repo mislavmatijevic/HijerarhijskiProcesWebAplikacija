@@ -5,6 +5,7 @@
 	export let matrix;
 </script>
 
+<h2>2. Matrica parova</h2>
 {#if criteriaArray !== undefined && matrix !== undefined}
 	<table id="table_criteria">
 		<thead>

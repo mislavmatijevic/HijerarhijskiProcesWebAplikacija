@@ -4,6 +4,7 @@
 	export let rowValuesSumColumn;
 </script>
 
+<h2>3. Normalizirana matrica parova</h2>
 {#if criteriaArray !== undefined && normalizedMatrix !== undefined}
 	<table id="table_criteria">
 		<thead>

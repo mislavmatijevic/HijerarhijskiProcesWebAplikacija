@@ -55,11 +55,11 @@
 	} catch {}
 </script>
 
-<h1>Određivanje prioriteta kriterija</h1>
-
+<h1>AHP metoda</h1>
 {#if criteriaArray === undefined}
 	<span>Pričekajte...</span>
 {:else}
+	<h2>1. Određivanje prioriteta kriterija</h2>
 	{#each criteriaArray as criteriaMain, indexMain}
 		{#if indexMain !== 0}
 			{#each criteriaArray as criteriaComparison, indexComparison}
