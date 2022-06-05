@@ -1,6 +1,7 @@
 <script>
 	import {
 		calculatePairwiseMatrix,
+		calculateWeightedSumValueColumn,
 		getRowValuesSumColumn,
 		normalizePairwiseMatrix
 	} from './../lib/functions/matrixCalculations.js';
@@ -8,6 +9,7 @@
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
 	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
 	import NormalizedPairWiseComparisonMatrix from '../lib/components/NormalizedPairWiseComparisonMatrix.svelte';
+	import ConsistencyTable from '../lib/components/ConsistencyTable.svelte';
 
 	let criteriaArray;
 	let pairsCount = 0;
@@ -39,6 +41,7 @@
 	let matrix = [];
 	let normalizedMatrix = [];
 	let rowValuesSumColumn;
+	let weightedSumValues = [];
 
 	/**
 	 * Clunky way of recalculating all of the values in the matrix.
@@ -49,6 +52,7 @@
 		matrix = calculatePairwiseMatrix(criteriaArray, criteriaPairwiseImportance);
 		normalizedMatrix = normalizePairwiseMatrix(matrix);
 		rowValuesSumColumn = getRowValuesSumColumn(normalizedMatrix);
+		weightedSumValues = calculateWeightedSumValueColumn(normalizedMatrix, rowValuesSumColumn);
 	};
 	try {
 		refreshMatrix();
@@ -98,6 +102,12 @@
 			bind:criteriaArray
 			bind:normalizedMatrix
 			bind:rowValuesSumColumn
+		/>
+		<ConsistencyTable
+			bind:criteriaArray
+			bind:matrix
+			bind:rowValuesSumColumn
+			bind:weightedSumValues
 		/>
 	{/if}
 {/if}

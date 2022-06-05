@@ -102,3 +102,24 @@ export const getRowValuesSumColumn = (normalizedMatrix) => {
 
 	return rowValuesSumColumn;
 };
+
+/**
+ * Calculates weighted sum value column.
+ * @param {[[]]} normalizedMatrix
+ * @param {[]} rowValuesSumColumn
+ * @returns {[]} Weighted sum value column.
+ */
+export const calculateWeightedSumValueColumn = (normalizedMatrix, rowValuesSumColumn) => {
+	let weightedSumValues = [];
+
+	normalizedMatrix.forEach((pairIntensityRow, indexRow) => {
+		let columnSum = parseFloat(0);
+
+		pairIntensityRow.forEach((pairIntensityValue) => {
+			columnSum += parseFloat(pairIntensityValue);
+		});
+		weightedSumValues[indexRow] = columnSum;
+	});
+
+	return weightedSumValues;
+};
