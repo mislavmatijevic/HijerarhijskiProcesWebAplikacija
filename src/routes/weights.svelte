@@ -1,5 +1,9 @@
 <script>
-	import { calculatePairwiseMatrix } from './../lib/functions/matrixCalculations.js';
+	import {
+		calculatePairwiseMatrix,
+		getRowValuesSumColumn,
+		normalizePairwiseMatrix
+	} from './../lib/functions/matrixCalculations.js';
 	import { getCurrentComparisonName } from '../lib/functions/nameParsing';
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
 	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
@@ -33,6 +37,8 @@
 	} catch {}
 
 	let matrix = [];
+	let normalizedMatrix = [];
+	let rowValuesSumColumn;
 
 	/**
 	 * Clunky way of recalculating all of the values in the matrix.
@@ -41,6 +47,8 @@
 	 */
 	const refreshMatrix = () => {
 		matrix = calculatePairwiseMatrix(criteriaArray, criteriaPairwiseImportance);
+		normalizedMatrix = normalizePairwiseMatrix(matrix);
+		rowValuesSumColumn = getRowValuesSumColumn(normalizedMatrix);
 	};
 	try {
 		refreshMatrix();
@@ -86,7 +94,11 @@
 	{/each}
 	{#if pairsCount !== 0 && Object.keys(criteriaPairwiseImportance).length === pairsCount && matrix.length !== 0}
 		<PairWiseComparisonMatrix bind:criteriaArray bind:matrix />
-		<NormalizedPairWiseComparisonMatrix bind:criteriaArray bind:matrix />
+		<NormalizedPairWiseComparisonMatrix
+			bind:criteriaArray
+			bind:normalizedMatrix
+			bind:rowValuesSumColumn
+		/>
 	{/if}
 {/if}
 <!-- Loaded content -->

@@ -1,28 +1,25 @@
 <script>
-	import { calculateMatrixColumnSum } from '../functions/matrixCalculations';
-
 	export let criteriaArray;
-	export let matrix;
+	export let normalizedMatrix;
+	export let rowValuesSumColumn;
 </script>
 
-{#if criteriaArray !== undefined && matrix !== undefined}
+{#if criteriaArray !== undefined && normalizedMatrix !== undefined}
 	<table id="table_criteria">
 		<thead>
 			{#each criteriaArray as criteria}
 				<th>{criteria}</th>
 			{/each}
+			<th>Težine kriterija</th>
 		</thead>
 		<tbody>
-			{#each matrix as pairIntensityRow, indexColumn}
+			{#each normalizedMatrix as pairIntensityRow, indexColumn}
 				<tr>
 					<td>{criteriaArray[indexColumn + 1]}</td>
 					{#each pairIntensityRow as pairIntensityValue, indexRow}
-						<td
-							>{parseFloat(pairIntensityValue / calculateMatrixColumnSum(matrix, indexRow)).toFixed(
-								4
-							)}</td
-						>
+						<td>{pairIntensityValue}</td>
 					{/each}
+					<td>{parseFloat(rowValuesSumColumn[indexColumn]).toFixed(4)}</td>
 				</tr>
 			{/each}
 		</tbody>
