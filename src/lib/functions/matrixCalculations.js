@@ -56,3 +56,14 @@ export const calculatePairwiseMatrix = (criteriaArray, criteriaPairwiseImportanc
 	});
 	return pairsWiseMatrix;
 };
+
+/**
+ * Returns a sum of a column.
+ */
+export const calculateMatrixColumnSum = (matrix, columnIndex) => {
+	let sum = 0;
+	matrix.forEach((row) => {
+		sum += row[columnIndex];
+	});
+	return sum;
+};

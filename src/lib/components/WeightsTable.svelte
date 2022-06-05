@@ -1,4 +1,6 @@
 <script>
+	import { calculateMatrixColumnSum } from '../functions/matrixCalculations';
+
 	export let criteriaArray;
 	export let matrix;
 </script>
@@ -19,6 +21,12 @@
 					{/each}
 				</tr>
 			{/each}
+			<tr>
+				<td>Ukupno</td>
+				{#each matrix as pairIntensityColumn, indexColumn}
+					<td>{calculateMatrixColumnSum(matrix, indexColumn)}</td>
+				{/each}
+			</tr>
 		</tbody>
 	</table>
 {/if}
