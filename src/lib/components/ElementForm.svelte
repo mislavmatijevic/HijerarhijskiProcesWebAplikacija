@@ -1,5 +1,5 @@
 <script>
-	import { getHtmlTagName } from './../functions/getHtmlTagName.js';
+	import { getHtmlTagName } from './../functions/nameParsing.js';
 	export let criteriaArray;
 	export let observedElements;
 	export let currentObservedElementIndex;
