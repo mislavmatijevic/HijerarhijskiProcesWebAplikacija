@@ -24,7 +24,7 @@
 			<tr>
 				<td>Ukupno</td>
 				{#each matrix as pairIntensityColumn, indexColumn}
-					<td>{calculateMatrixColumnSum(matrix, indexColumn)}</td>
+					<td>{parseFloat(calculateMatrixColumnSum(matrix, indexColumn)).toFixed(2)}</td>
 				{/each}
 			</tr>
 		</tbody>
