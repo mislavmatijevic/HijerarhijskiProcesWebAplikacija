@@ -16,6 +16,9 @@
 		currentObservedElementIndex = observedElements.length;
 	} catch (error) {}
 
+	/**
+	 * Deletes all data from the application.
+	 */
 	const deleteValues = () => {
 		localStorage.clear();
 		criteriaArray = ['Naziv'];
@@ -23,12 +26,18 @@
 		currentObservedElementIndex = 0;
 	};
 
+	/**
+	 * Loads test data from JSON file.
+	 */
 	const loadTestValues = () => {
 		criteriaArray = testCriterias;
 		observedElements = testPhones;
 		currentObservedElementIndex = observedElements.length;
 	};
 
+	/**
+	 * Saves arrays in localStorage for usage on next page (and for future uses of the application).
+	 */
 	const saveArrays = () => {
 		localStorage.setItem('criteriaArray', JSON.stringify(criteriaArray));
 		localStorage.setItem('observedElements', JSON.stringify(observedElements));

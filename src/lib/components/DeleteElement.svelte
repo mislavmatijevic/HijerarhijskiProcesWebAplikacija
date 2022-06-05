@@ -2,6 +2,10 @@
 	export let observedElements;
 	export let currentObservedElementIndex;
 
+	/**
+	 * Deletes an element from the table for entered index.
+	 * @param event Click event.
+	 */
 	const deleteElement = (event) => {
 		event.preventDefault();
 		const indexForDeletion = document.querySelector('#input_deletion').value;

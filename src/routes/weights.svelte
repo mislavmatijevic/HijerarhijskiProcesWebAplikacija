@@ -7,9 +7,15 @@
 	let criteriaArray;
 	let pairsCount = 0;
 	let criteriaPairwiseImportance = {};
+
+	// Svelte Kit just assumes I want SSR. I DON'T.
+	// So, it first calculates code on the server side, and then it sends it down here.
+	// All great and stuff, but I need my local storage here.
+	// So I "geniously" implemented this aweful try-catch just to get around SSR and get down to business.
 	try {
 		criteriaArray = JSON.parse(localStorage.getItem('criteriaArray'));
 
+		// Wait for all criterias to get ready before displaying the bottom 'WeightsTable'.
 		criteriaArray.forEach((criteriaUpper, indexUpper) => {
 			if (indexUpper !== 0)
 				criteriaArray.forEach((criteriaLower, indexLower) => {
@@ -27,6 +33,11 @@
 
 	let matrix = [];
 
+	/**
+	 * Clunky way of recalculating all of the values in the matrix.
+	 * It's not the best way, but hey, it works.
+	 * This is a random small college project after all (I should remember that more often for my own good)... :)
+	 */
 	const refreshMatrix = () => {
 		matrix = calculatePairwiseMatrix(criteriaArray, criteriaPairwiseImportance);
 		console.log(matrix);

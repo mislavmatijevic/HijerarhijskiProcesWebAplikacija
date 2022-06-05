@@ -14,5 +14,12 @@ export const getHtmlTagName = (criteriaName) => {
 	);
 };
 
+/**
+ * Provided "normal", human-readable criteria names (one pair of two criterias),
+ * this function generates a HTML-like 'id' string for provided pair.
+ * @param {string} criteriaMain
+ * @param {string} criteriaComparison
+ * @returns Unique name for current criteria pair.
+ */
 export const getCurrentComparisonName = (criteriaMain, criteriaComparison) =>
 	getHtmlTagName(criteriaMain) + '_' + getHtmlTagName(criteriaComparison);

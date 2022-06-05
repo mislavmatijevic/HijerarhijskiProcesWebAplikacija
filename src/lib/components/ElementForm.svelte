@@ -4,6 +4,10 @@
 	export let observedElements;
 	export let currentObservedElementIndex;
 
+	/**
+	 * Clears all form inputs.
+	 * Good for user experience after an object is added or new object is selected.
+	 */
 	const clearAllInputs = () => {
 		criteriaArray.forEach((criteria) => {
 			document.querySelector(`#${getHtmlTagName(criteria)}`).value = '';

@@ -3,8 +3,13 @@
 
 	let currentNewCriteria = '';
 
-	const addNewElement = (e) => {
-		e.preventDefault();
+	/**
+	 * Adds new criteria in the application.
+	 * Criterias are root of future calculations.
+	 * @param event Click event.
+	 */
+	const addNewElement = (event) => {
+		event.preventDefault();
 		if (currentNewCriteria !== '') {
 			criteriaArray = [...criteriaArray, currentNewCriteria];
 			currentNewCriteria = '';
