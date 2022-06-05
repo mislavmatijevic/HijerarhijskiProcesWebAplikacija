@@ -41,6 +41,9 @@
 	const refreshMatrix = () => {
 		matrix = calculatePairwiseMatrix(criteriaArray, criteriaPairwiseImportance);
 	};
+	try {
+		refreshMatrix();
+	} catch {}
 </script>
 
 <h1>Određivanje prioriteta kriterija</h1>
@@ -80,7 +83,7 @@
 			{/each}
 		{/if}
 	{/each}
-	{#if pairsCount !== 0 && Object.keys(criteriaPairwiseImportance).length === pairsCount}
+	{#if pairsCount !== 0 && Object.keys(criteriaPairwiseImportance).length === pairsCount && matrix.length !== 0}
 		<PairWiseComparisonMatrix bind:criteriaArray bind:matrix />
 	{/if}
 {/if}
