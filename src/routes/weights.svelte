@@ -3,6 +3,7 @@
 	import { getCurrentComparisonName } from '../lib/functions/nameParsing';
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
 	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
+	import NormalizedPairWiseComparisonMatrix from '../lib/components/NormalizedPairWiseComparisonMatrix.svelte';
 
 	let criteriaArray;
 	let pairsCount = 0;
@@ -85,6 +86,7 @@
 	{/each}
 	{#if pairsCount !== 0 && Object.keys(criteriaPairwiseImportance).length === pairsCount && matrix.length !== 0}
 		<PairWiseComparisonMatrix bind:criteriaArray bind:matrix />
+		<NormalizedPairWiseComparisonMatrix bind:criteriaArray bind:matrix />
 	{/if}
 {/if}
 <!-- Loaded content -->
