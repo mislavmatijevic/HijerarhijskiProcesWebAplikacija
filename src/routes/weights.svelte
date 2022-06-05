@@ -1,14 +1,36 @@
 <script>
-	import { getCurrentComparisonName, getHtmlTagName } from '../lib/functions/nameParsing';
+	import { calculatePairwiseMatrix } from './../lib/functions/matrixCalculations.js';
+	import { getCurrentComparisonName } from '../lib/functions/nameParsing';
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
 	import WeightsTable from '../lib/components/WeightsTable.svelte';
 
 	let criteriaArray;
+	let pairsCount = 0;
+	let criteriaPairwiseImportance = {};
 	try {
 		criteriaArray = JSON.parse(localStorage.getItem('criteriaArray'));
+
+		criteriaArray.forEach((criteriaUpper, indexUpper) => {
+			if (indexUpper !== 0)
+				criteriaArray.forEach((criteriaLower, indexLower) => {
+					if (indexLower !== 0) {
+						if (indexUpper < indexLower) {
+							pairsCount++;
+							// Set default intensity to 1 (Equally important/'Jednako važno' value).
+							criteriaPairwiseImportance[getCurrentComparisonName(criteriaUpper, criteriaLower)] =
+								intensityOfRelativeImportance[0];
+						}
+					}
+				});
+		});
 	} catch {}
 
-	let criteriaPairwiseImportance = {};
+	let matrix = [];
+
+	const refreshMatrix = () => {
+		matrix = calculatePairwiseMatrix(criteriaArray, criteriaPairwiseImportance);
+		console.log(matrix);
+	};
 </script>
 
 <h1>Određivanje prioriteta kriterija</h1>
@@ -30,6 +52,7 @@
 						bind:value={criteriaPairwiseImportance[
 							getCurrentComparisonName(criteriaMain, criteriaComparison)
 						]}
+						on:change={refreshMatrix}
 					>
 						{#each intensityOfRelativeImportance as importanceValue, index}
 							{#if index === 0}
@@ -47,6 +70,8 @@
 			{/each}
 		{/if}
 	{/each}
-	<WeightsTable bind:criteriaArray bind:criteriaPairwiseImportance />
+	{#if pairsCount !== 0 && Object.keys(criteriaPairwiseImportance).length === pairsCount}
+		<WeightsTable bind:criteriaArray bind:matrix />
+	{/if}
 {/if}
 <!-- Loaded content -->
