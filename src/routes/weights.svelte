@@ -1,5 +1,13 @@
 <script>
 	import {
+		criteriaArray,
+		criteriaPairwiseImportance,
+		matrix,
+		normalizedMatrix,
+		rowValuesSumColumn,
+		weightedSumValues
+	} from './../lib/stores/stores.js';
+	import {
 		calculatePairwiseMatrix,
 		calculateWeightedSumValueColumn,
 		getRowValuesSumColumn,
@@ -11,26 +19,24 @@
 	import NormalizedPairWiseComparisonMatrix from '../lib/components/NormalizedPairWiseComparisonMatrix.svelte';
 	import ConsistencyTable from '../lib/components/ConsistencyTable.svelte';
 
-	let criteriaArray;
 	let pairsCount = 0;
-	let criteriaPairwiseImportance = {};
 
 	// Svelte Kit just assumes I want SSR. I DON'T.
 	// So, it first calculates code on the server side, and then it sends it down here.
 	// All great and stuff, but I need my local storage here.
 	// So I "geniously" implemented this aweful try-catch just to get around SSR and get down to business.
 	try {
-		criteriaArray = JSON.parse(localStorage.getItem('criteriaArray'));
+		$criteriaArray = JSON.parse(localStorage.getItem('criteriaArray'));
 
 		// Wait for all criterias to get ready before displaying the bottom 'PairWiseComparisonMatrix'.
-		criteriaArray.forEach((criteriaUpper, indexUpper) => {
+		$criteriaArray.forEach((criteriaUpper, indexUpper) => {
 			if (indexUpper !== 0)
-				criteriaArray.forEach((criteriaLower, indexLower) => {
+				$criteriaArray.forEach((criteriaLower, indexLower) => {
 					if (indexLower !== 0) {
 						if (indexUpper < indexLower) {
 							pairsCount++;
 							// Set default intensity to 1 (Equally important/'Jednako važno' value).
-							criteriaPairwiseImportance[getCurrentComparisonName(criteriaUpper, criteriaLower)] =
+							$criteriaPairwiseImportance[getCurrentComparisonName(criteriaUpper, criteriaLower)] =
 								intensityOfRelativeImportance[0];
 						}
 					}
@@ -38,21 +44,16 @@
 		});
 	} catch {}
 
-	let matrix = [];
-	let normalizedMatrix = [];
-	let rowValuesSumColumn;
-	let weightedSumValues = [];
-
 	/**
-	 * Clunky way of recalculating all of the values in the matrix.
+	 * Clunky way of recalculating all of the values in the $matrix.
 	 * It's not the best way, but hey, it works.
 	 * This is a random small college project after all (I should remember that more often for my own good)... :)
 	 */
 	const refreshMatrix = () => {
-		matrix = calculatePairwiseMatrix(criteriaArray, criteriaPairwiseImportance);
-		normalizedMatrix = normalizePairwiseMatrix(matrix);
-		rowValuesSumColumn = getRowValuesSumColumn(normalizedMatrix);
-		weightedSumValues = calculateWeightedSumValueColumn(normalizedMatrix, rowValuesSumColumn);
+		$matrix = calculatePairwiseMatrix($criteriaArray, $criteriaPairwiseImportance);
+		$normalizedMatrix = normalizePairwiseMatrix($matrix);
+		$rowValuesSumColumn = getRowValuesSumColumn($normalizedMatrix);
+		$weightedSumValues = calculateWeightedSumValueColumn($normalizedMatrix, $rowValuesSumColumn);
 	};
 	try {
 		refreshMatrix();
@@ -60,13 +61,13 @@
 </script>
 
 <h1>AHP metoda</h1>
-{#if criteriaArray === undefined}
+{#if $criteriaArray === undefined}
 	<span>Pričekajte...</span>
 {:else}
 	<h2>1. Određivanje prioriteta kriterija</h2>
-	{#each criteriaArray as criteriaMain, indexMain}
+	{#each $criteriaArray as criteriaMain, indexMain}
 		{#if indexMain !== 0}
-			{#each criteriaArray as criteriaComparison, indexComparison}
+			{#each $criteriaArray as criteriaComparison, indexComparison}
 				{#if indexMain < indexComparison}
 					<label
 						for={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
@@ -75,7 +76,7 @@
 					>
 					<select
 						id={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
-						bind:value={criteriaPairwiseImportance[
+						bind:value={$criteriaPairwiseImportance[
 							getCurrentComparisonName(criteriaMain, criteriaComparison)
 						]}
 						on:change={refreshMatrix}
@@ -86,7 +87,9 @@
 							{:else if index === 9}
 								<optgroup label="Recipročno" />
 							{/if}
-							<option value={importanceValue} on:click={() => (criteriaArray = [...criteriaArray])}
+							<option
+								value={importanceValue}
+								on:click={() => ($criteriaArray = [...$criteriaArray])}
 								>{importanceValue.definition} ({importanceValue.intensity})</option
 							>
 						{/each}
@@ -96,19 +99,10 @@
 			{/each}
 		{/if}
 	{/each}
-	{#if pairsCount !== 0 && Object.keys(criteriaPairwiseImportance).length === pairsCount && matrix.length !== 0}
-		<PairWiseComparisonMatrix bind:criteriaArray bind:matrix />
-		<NormalizedPairWiseComparisonMatrix
-			bind:criteriaArray
-			bind:normalizedMatrix
-			bind:rowValuesSumColumn
-		/>
-		<ConsistencyTable
-			bind:criteriaArray
-			bind:matrix
-			bind:rowValuesSumColumn
-			bind:weightedSumValues
-		/>
+	{#if pairsCount !== 0 && Object.keys($criteriaPairwiseImportance).length === pairsCount && $matrix.length !== 0}
+		<PairWiseComparisonMatrix />
+		<NormalizedPairWiseComparisonMatrix />
+		<ConsistencyTable />
 	{/if}
 {/if}
 <!-- Loaded content -->
