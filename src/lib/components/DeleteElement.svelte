@@ -1,5 +1,5 @@
 <script>
-	export let observedElements;
+	import { observedElements } from './../stores/stores.js';
 	export let currentObservedElementIndex;
 
 	/**
@@ -10,11 +10,11 @@
 		event.preventDefault();
 		const indexForDeletion = document.querySelector('#input_deletion').value;
 		if (indexForDeletion !== undefined && indexForDeletion >= 0) {
-			observedElements.splice(indexForDeletion, 1);
-			observedElements = [...observedElements];
+			$observedElements.splice(indexForDeletion, 1);
+			$observedElements = [...$observedElements];
 
-			if (currentObservedElementIndex > observedElements.length) {
-				currentObservedElementIndex = observedElements.length;
+			if (currentObservedElementIndex > $observedElements.length) {
+				currentObservedElementIndex = $observedElements.length;
 			}
 		}
 	};
@@ -23,6 +23,6 @@
 <form>
 	<input id="input_deletion" />
 	<button on:click={deleteElement}
-		>Izbriši element po indeksu (0-{observedElements.length - 1})</button
+		>Izbriši element po indeksu (0-{$observedElements.length - 1})</button
 	>
 </form>

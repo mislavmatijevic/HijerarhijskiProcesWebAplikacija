@@ -1,20 +1,19 @@
 <script>
-	export let criteriaArray;
-	export let observedElements;
+	import { criteriaArray, observedElements } from './../stores/stores.js';
 </script>
 
 <h2>Tablica</h2>
 
 <table id="table_criteria">
 	<thead>
-		{#each criteriaArray as criteria}
+		{#each $criteriaArray as criteria}
 			<th>{criteria}</th>
 		{/each}
 	</thead>
 	<tbody>
-		{#each observedElements as element}
+		{#each $observedElements as element}
 			<tr>
-				{#each criteriaArray as criteria}
+				{#each $criteriaArray as criteria}
 					<td>{element[criteria] !== undefined ? element[criteria] : ''}</td>
 				{/each}
 			</tr>

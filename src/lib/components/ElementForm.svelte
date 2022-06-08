@@ -1,7 +1,6 @@
 <script>
+	import { criteriaArray, observedElements } from './../stores/stores.js';
 	import { getHtmlTagName } from './../functions/nameParsing.js';
-	export let criteriaArray;
-	export let observedElements;
 	export let currentObservedElementIndex;
 
 	/**
@@ -9,7 +8,7 @@
 	 * Good for user experience after an object is added or new object is selected.
 	 */
 	const clearAllInputs = () => {
-		criteriaArray.forEach((criteria) => {
+		$criteriaArray.forEach((criteria) => {
 			document.querySelector(`#${getHtmlTagName(criteria)}`).value = '';
 		});
 	};
@@ -22,22 +21,22 @@
 	const saveCurrentElement = (event) => {
 		event.preventDefault();
 		const object = {};
-		criteriaArray.forEach((criteria) => {
+		$criteriaArray.forEach((criteria) => {
 			object[criteria] = document.querySelector(`#${getHtmlTagName(criteria)}`).value;
 		});
 
 		if (currentObservedElementIndex < 0) {
 			currentObservedElementIndex = 0;
-		} else if (currentObservedElementIndex > observedElements.length) {
-			currentObservedElementIndex = observedElements.length;
+		} else if (currentObservedElementIndex > $observedElements.length) {
+			currentObservedElementIndex = $observedElements.length;
 		}
 
-		if (currentObservedElementIndex == observedElements.length) {
-			observedElements = [...observedElements, object];
-			currentObservedElementIndex = observedElements.length;
+		if (currentObservedElementIndex == $observedElements.length) {
+			$observedElements = [...$observedElements, object];
+			currentObservedElementIndex = $observedElements.length;
 			clearAllInputs();
-		} else if (currentObservedElementIndex < observedElements.length) {
-			observedElements[currentObservedElementIndex] = object;
+		} else if (currentObservedElementIndex < $observedElements.length) {
+			$observedElements[currentObservedElementIndex] = object;
 		}
 	};
 
@@ -46,15 +45,15 @@
 	 * Serves to show user data of currently selected object.
 	 */
 	const bindInputsWithCurrentElement = () => {
-		if (currentObservedElementIndex < 0 || currentObservedElementIndex > observedElements.length) {
+		if (currentObservedElementIndex < 0 || currentObservedElementIndex > $observedElements.length) {
 			return;
 		}
 
-		if (currentObservedElementIndex == observedElements.length) {
+		if (currentObservedElementIndex == $observedElements.length) {
 			clearAllInputs();
 		} else {
-			criteriaArray.forEach((criteria) => {
-				let currentCriteria = observedElements[currentObservedElementIndex][criteria];
+			$criteriaArray.forEach((criteria) => {
+				let currentCriteria = $observedElements[currentObservedElementIndex][criteria];
 
 				if (currentCriteria === undefined) {
 					currentCriteria = '';
@@ -68,7 +67,7 @@
 
 <form>
 	<h2>
-		{#if currentObservedElementIndex == observedElements.length}
+		{#if currentObservedElementIndex === $observedElements.length}
 			Nova
 		{:else}
 			{currentObservedElementIndex + 1}
@@ -86,21 +85,21 @@
 	<button
 		on:click={(e) => {
 			e.preventDefault();
-			if (currentObservedElementIndex < observedElements.length) {
+			if (currentObservedElementIndex < $observedElements.length) {
 				currentObservedElementIndex++;
 				bindInputsWithCurrentElement();
 			}
 		}}>-&gt;</button
 	>
 	<br />
-	{#each criteriaArray as criteria, indexCriteria}
+	{#each $criteriaArray as criteria, indexCriteria}
 		<label for={getHtmlTagName(criteria)}>{criteria}: </label>
 		<input id={getHtmlTagName(criteria)} type={indexCriteria !== 0 && 'number'} />
 		<br />
 	{/each}
-	{#if criteriaArray.length > 0}
+	{#if $criteriaArray.length > 0}
 		<button on:click={saveCurrentElement}>
-			{#if currentObservedElementIndex == observedElements.length}
+			{#if currentObservedElementIndex == $observedElements.length}
 				Dodaj novi element u tablicu
 			{:else}
 				Pohrani {currentObservedElementIndex + 1} element.

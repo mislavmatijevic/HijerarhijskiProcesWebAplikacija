@@ -1,5 +1,5 @@
 <script>
-	export let criteriaArray;
+	import { criteriaArray } from '../stores/stores';
 
 	let currentNewCriteria = '';
 
@@ -11,7 +11,7 @@
 	const addNewElement = (event) => {
 		event.preventDefault();
 		if (currentNewCriteria !== '') {
-			criteriaArray = [...criteriaArray, currentNewCriteria];
+			$criteriaArray = [...$criteriaArray, currentNewCriteria];
 			currentNewCriteria = '';
 		}
 	};
