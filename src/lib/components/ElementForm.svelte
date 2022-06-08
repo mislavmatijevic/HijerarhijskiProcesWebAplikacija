@@ -93,9 +93,9 @@
 		}}>-&gt;</button
 	>
 	<br />
-	{#each criteriaArray as criteria}
+	{#each criteriaArray as criteria, indexCriteria}
 		<label for={getHtmlTagName(criteria)}>{criteria}: </label>
-		<input id={getHtmlTagName(criteria)} type="number" />
+		<input id={getHtmlTagName(criteria)} type={indexCriteria !== 0 && 'number'} />
 		<br />
 	{/each}
 	{#if criteriaArray.length > 0}
