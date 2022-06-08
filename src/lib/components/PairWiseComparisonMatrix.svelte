@@ -14,14 +14,14 @@
 		<tbody>
 			{#each $matrix as pairIntensityRow, indexRow}
 				<tr>
-					<td>{$criteriaArray[indexRow + 1]}</td>
+					<td><strong>{$criteriaArray[indexRow + 1]}</strong></td>
 					{#each pairIntensityRow as pairIntensityValue}
 						<td>{pairIntensityValue}</td>
 					{/each}
 				</tr>
 			{/each}
 			<tr>
-				<td>Ukupno</td>
+				<td><strong>Ukupno</strong></td>
 				{#each $matrix as _pairIntensityColumn, indexColumn}
 					<td>{parseFloat(calculateMatrixColumnSum($matrix, indexColumn)).toFixed(2)}</td>
 				{/each}

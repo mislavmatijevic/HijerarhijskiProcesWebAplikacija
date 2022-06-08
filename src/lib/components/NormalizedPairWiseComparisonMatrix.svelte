@@ -14,7 +14,7 @@
 		<tbody>
 			{#each $normalizedMatrix as pairIntensityRow, indexColumn}
 				<tr>
-					<td>{$criteriaArray[indexColumn + 1]}</td>
+					<td><strong>{$criteriaArray[indexColumn + 1]}</strong></td>
 					{#each pairIntensityRow as pairIntensityValue, indexRow}
 						<td>{pairIntensityValue}</td>
 					{/each}
