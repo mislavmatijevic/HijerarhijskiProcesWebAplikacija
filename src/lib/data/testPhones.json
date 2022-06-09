@@ -1,35 +1,35 @@
 [
     {
         "Naziv": "Mobile 1",
-        "Cijena (kn)": "250",
+        "Popust (%)": "25",
         "Prostor (GB)": "16",
         "Kamera (MP)": "12",
         "Izgled (1-5)": "5"
     },
     {
         "Naziv": "Mobile 2",
-        "Cijena (kn)": "200",
+        "Popust (%)": "20",
         "Prostor (GB)": "16",
         "Kamera (MP)": "8",
         "Izgled (1-5)": "3"
     },
     {
         "Naziv": "Mobile 3",
-        "Cijena (kn)": "300",
+        "Popust (%)": "30",
         "Prostor (GB)": "32",
         "Kamera (MP)": "16",
         "Izgled (1-5)": "4"
     },
     {
         "Naziv": "Mobile 4",
-        "Cijena (kn)": "275",
+        "Popust (%)": "27",
         "Prostor (GB)": "32",
         "Kamera (MP)": "8",
         "Izgled (1-5)": "4"
     },
     {
         "Naziv": "Mobile 5",
-        "Cijena (kn)": "225",
+        "Popust (%)": "22",
         "Prostor (GB)": "16",
         "Kamera (MP)": "16",
         "Izgled (1-5)": "2"
