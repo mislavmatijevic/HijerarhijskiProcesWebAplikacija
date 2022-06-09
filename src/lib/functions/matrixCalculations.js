@@ -1,4 +1,5 @@
 import { getCurrentComparisonName } from './nameParsing';
+
 /**
  * Returns intensity of this comparison pair.
  * Uses special HTML tag value name generated for this pair.
@@ -122,4 +123,69 @@ export const calculateWeightedSumValueColumn = (normalizedMatrix, rowValuesSumCo
 	});
 
 	return weightedSumValues;
+};
+
+/**
+ * Calculates how much does one alternative/element dominate over other (or how little).
+ * @param {[]} criteria
+ * @param {[]} observedElementsArray
+ * @returns Returns array fille with indexes from intensity of relative importance JSON array.
+ * Element is -1 if it's the same.
+ */
+export const calculateAlternativeDominationOverOther = (criteria, observedElementsArray) => {
+	const dominationsIndexedRows = [];
+	let elementsNotEvaluated = observedElementsArray.length;
+
+	observedElementsArray.forEach((alternative1, indexOfAlternative1) => {
+		// This calculation is done in 3 steps.
+		// Step 1: identify array of elements with
+		// 		1) Greater value of criteria (better alternatives -> domination < 1)
+		// 		2) Equal value of criteria (same alternatives -> domination = 1)
+		// 		3) Smaller value of criteria (worse alternatives -> domination > 1)
+		// Step 2: sort these three arrays and assign their elements appropriate intensity array (in JSON file) indexes
+		// Step 3: fill row
+
+		let betterAlternatives = [];
+		let worseAlternatives = [];
+		let dominationRow = [];
+
+		observedElementsArray.forEach((alternative2, indexOfAlternative2) => {
+			if (indexOfAlternative2 < indexOfAlternative1) {
+				let evaluatedValueReciprocal =
+					dominationsIndexedRows[indexOfAlternative2][indexOfAlternative1];
+				dominationRow[indexOfAlternative2] = -evaluatedValueReciprocal;
+			} else {
+				const currentObject = { index: indexOfAlternative2, name: alternative2 };
+
+				if (alternative1[criteria] === alternative2[criteria]) {
+					dominationRow[indexOfAlternative2] = 0; // Index for same importance (ie 1)
+				} else if (alternative1[criteria] > alternative2[criteria]) {
+					betterAlternatives.push(currentObject);
+				} else {
+					worseAlternatives.push(currentObject);
+				}
+			}
+		});
+
+		betterAlternatives.sort(
+			(alternative1, alternative2) => alternative1[criteria] > alternative2[criteria]
+		);
+		worseAlternatives.sort(
+			(alternative1, alternative2) => alternative1[criteria] < alternative2[criteria]
+		);
+
+		let betterValues = 0; // Normal Index in intensity of relative importance
+		betterAlternatives = betterAlternatives.map(
+			(betterAlternative) => (dominationRow[betterAlternative.index] = betterValues++)
+		);
+		let worseValues = 10; // Reciprocal Index in intensity of relative importance
+		worseAlternatives = worseAlternatives.map(
+			(worseAlternative) => (dominationRow[worseAlternative.index] = worseValues++)
+		);
+
+		dominationsIndexedRows.push(dominationRow);
+		elementsNotEvaluated--;
+	});
+
+	return dominationsIndexedRows;
 };

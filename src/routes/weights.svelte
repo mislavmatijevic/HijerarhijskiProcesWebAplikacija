@@ -1,11 +1,13 @@
 <script>
+	import CriteriaComparisonTable from './../lib/components/CriteriaComparisonTable.svelte';
 	import {
 		criteriaArray,
 		criteriaPairwiseImportance,
 		matrix,
 		normalizedMatrix,
 		rowValuesSumColumn,
-		weightedSumValues
+		weightedSumValues,
+		observedElements
 	} from './../lib/stores/stores.js';
 	import {
 		calculatePairwiseMatrix,
@@ -17,7 +19,6 @@
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
 	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
 	import NormalizedPairWiseComparisonMatrix from '../lib/components/NormalizedPairWiseComparisonMatrix.svelte';
-	import ConsistencyTable from '../lib/components/ConsistencyTable.svelte';
 
 	let pairsCount = 0;
 
@@ -27,6 +28,7 @@
 	// So I "geniously" implemented this aweful try-catch just to get around SSR and get down to business.
 	try {
 		$criteriaArray = JSON.parse(localStorage.getItem('criteriaArray'));
+		$observedElements = JSON.parse(localStorage.getItem('observedElements'));
 
 		// Wait for all criterias to get ready before displaying the bottom 'PairWiseComparisonMatrix'.
 		$criteriaArray.forEach((criteriaUpper, indexUpper) => {
@@ -102,7 +104,12 @@
 	{#if pairsCount !== 0 && Object.keys($criteriaPairwiseImportance).length === pairsCount && $matrix.length !== 0}
 		<PairWiseComparisonMatrix />
 		<NormalizedPairWiseComparisonMatrix />
-		<ConsistencyTable />
+		{#each $criteriaArray as criteria, indexCriteria}
+			{#if indexCriteria > 0}
+				<h2>{indexCriteria + 4}. ({criteria}) MAX</h2>
+				<CriteriaComparisonTable currentCriteria={criteria} />
+			{/if}
+		{/each}
 	{/if}
 {/if}
 <!-- Loaded content -->
