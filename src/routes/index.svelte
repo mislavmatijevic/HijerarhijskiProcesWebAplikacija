@@ -43,22 +43,58 @@
 	};
 </script>
 
-<h1>Analitički hijerarhijski proces</h1>
-<p>
-	Ovaj projekt dostupan je na repozitoriju <a
-		href="https://github.com/mislavmatijevic/HijerarhijskiProcesWebAplikacija">na GitHub-u</a
-	>.
-</p>
+<div class="container">
+	<h1>Analitički hijerarhijski proces</h1>
+	<p>
+		Ovaj projekt dostupan je na repozitoriju <a
+			href="https://github.com/mislavmatijevic/HijerarhijskiProcesWebAplikacija">na GitHub-u</a
+		>.
+	</p>
 
-<button on:click={deleteValues}> Izbriši sve vrijednosti </button>
-<button on:click={loadTestValues}> Učitaj testne vrijednosti </button>
+	<div class="container__buttons">
+		<button on:click={deleteValues}> Izbriši sve vrijednosti </button>
+		<button on:click={loadTestValues}> Učitaj testne vrijednosti </button>
+	</div>
 
-<CriteriaInput />
+	<CriteriaInput />
 
-<ElementForm bind:currentObservedElementIndex />
+	<div class="separator" />
 
-{#if $observedElements.length > 0}
-	<ElementsTable />
-	<DeleteElement bind:currentObservedElementIndex />
-	<a href="/weights" on:click={saveArrays}>Pohrani i nastavi na odabir prioriteta...</a>
-{/if}
+	<div class="elements-view">
+		<div class="elements-view__form">
+			<ElementForm bind:currentObservedElementIndex />
+		</div>
+
+		<div class="elements-view__form">
+			{#if $observedElements.length > 0}
+				<ElementsTable />
+				<div class="separator" />
+				<DeleteElement bind:currentObservedElementIndex />
+				<a href="/weights" on:click={saveArrays}>Pohrani i nastavi na odabir prioriteta...</a>
+			{/if}
+		</div>
+	</div>
+</div>
+
+<style>
+	.container {
+		margin: 20px;
+		display: flex;
+		flex-direction: column;
+	}
+	button {
+		max-width: 30%;
+		margin: 20px 0;
+	}
+	.separator {
+		margin: 30px;
+		height: 1px;
+		width: 100%;
+		background-color: #aeaeae;
+	}
+	.elements-view {
+		display: flex;
+		gap: 10%;
+		width: 100%;
+	}
+</style>

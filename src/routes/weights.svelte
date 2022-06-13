@@ -62,54 +62,77 @@
 	} catch {}
 </script>
 
-<h1>AHP metoda</h1>
-{#if $criteriaArray === undefined}
-	<span>Pričekajte...</span>
-{:else}
-	<h2>1. Određivanje prioriteta kriterija</h2>
-	{#each $criteriaArray as criteriaMain, indexMain}
-		{#if indexMain !== 0}
-			{#each $criteriaArray as criteriaComparison, indexComparison}
-				{#if indexMain < indexComparison}
-					<label
-						for={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
-						>Ocjena važnosti kriterija "{@html '<strong>' + criteriaMain + '</strong>'}" s
-						kriterijem "{@html '<strong>' + criteriaComparison + '</strong>'}"</label
-					>
-					<select
-						id={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
-						bind:value={$criteriaPairwiseImportance[
-							getCurrentComparisonName(criteriaMain, criteriaComparison)
-						]}
-						on:change={refreshMatrix}
-					>
-						{#each intensityOfRelativeImportance as importanceValue, index}
-							{#if index === 0}
-								<optgroup label="Normalno" />
-							{:else if index === 9}
-								<optgroup label="Recipročno" />
-							{/if}
-							<option
-								value={importanceValue}
-								on:click={() => ($criteriaArray = [...$criteriaArray])}
-								>{importanceValue.definition} ({importanceValue.intensity})</option
-							>
-						{/each}
-					</select>
-					<br />
-				{/if}
-			{/each}
-		{/if}
-	{/each}
-	{#if pairsCount !== 0 && Object.keys($criteriaPairwiseImportance).length === pairsCount && $matrix.length !== 0}
-		<PairWiseComparisonMatrix />
-		<NormalizedPairWiseComparisonMatrix />
-		{#each $criteriaArray as criteria, indexCriteria}
-			{#if indexCriteria > 0}
-				<h2>{indexCriteria + 4}. ({criteria}) MAX</h2>
-				<CriteriaComparisonTable currentCriteria={criteria} />
+<div class="container">
+	<h1>AHP metoda</h1>
+	{#if $criteriaArray === undefined}
+		<span>Pričekajte...</span>
+	{:else}
+		<h2>1. Određivanje prioriteta kriterija</h2>
+		{#each $criteriaArray as criteriaMain, indexMain}
+			{#if indexMain !== 0}
+				{#each $criteriaArray as criteriaComparison, indexComparison}
+					{#if indexMain < indexComparison}
+						<label
+							for={'select_importance_' +
+								getCurrentComparisonName(criteriaMain, criteriaComparison)}
+							>Ocjena važnosti kriterija "{@html '<strong>' + criteriaMain + '</strong>'}" s
+							kriterijem "{@html '<strong>' + criteriaComparison + '</strong>'}"</label
+						>
+						<select
+							id={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
+							bind:value={$criteriaPairwiseImportance[
+								getCurrentComparisonName(criteriaMain, criteriaComparison)
+							]}
+							on:change={refreshMatrix}
+						>
+							{#each intensityOfRelativeImportance as importanceValue, index}
+								{#if index === 0}
+									<optgroup label="Normalno" />
+								{:else if index === 9}
+									<optgroup label="Recipročno" />
+								{/if}
+								<option
+									value={importanceValue}
+									on:click={() => ($criteriaArray = [...$criteriaArray])}
+									>{importanceValue.definition} ({importanceValue.intensity})</option
+								>
+							{/each}
+						</select>
+						<br />
+					{/if}
+				{/each}
 			{/if}
 		{/each}
+		{#if pairsCount !== 0 && Object.keys($criteriaPairwiseImportance).length === pairsCount && $matrix.length !== 0}
+			<PairWiseComparisonMatrix />
+			<NormalizedPairWiseComparisonMatrix />
+			<div class="container__criteria-comparisons">
+				{#each $criteriaArray as criteria, indexCriteria}
+					{#if indexCriteria > 0}
+						<div>
+							<h2>{indexCriteria + 4}. ({criteria}) MAX</h2>
+							<CriteriaComparisonTable currentCriteria={criteria} />
+						</div>
+					{/if}
+				{/each}
+			</div>
+		{/if}
 	{/if}
-{/if}
+</div>
+
 <!-- Loaded content -->
+<style>
+	.container {
+		margin: 20px;
+		margin-right: 0;
+		padding-right: 0;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+	.container__criteria-comparisons {
+		display: grid;
+		grid-template: auto 1fr / auto 1fr auto;
+		gap: 10px;
+	}
+</style>

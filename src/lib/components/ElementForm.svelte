@@ -73,24 +73,26 @@
 			{currentObservedElementIndex + 1}
 		{/if} vrijednost
 	</h2>
-	<button
-		on:click={(e) => {
-			e.preventDefault();
-			if (currentObservedElementIndex > 0) {
-				currentObservedElementIndex--;
-				bindInputsWithCurrentElement();
-			}
-		}}>&lt;-</button
-	>
-	<button
-		on:click={(e) => {
-			e.preventDefault();
-			if (currentObservedElementIndex < $observedElements.length) {
-				currentObservedElementIndex++;
-				bindInputsWithCurrentElement();
-			}
-		}}>-&gt;</button
-	>
+	<div class="form__arrows">
+		<button
+			on:click={(e) => {
+				e.preventDefault();
+				if (currentObservedElementIndex > 0) {
+					currentObservedElementIndex--;
+					bindInputsWithCurrentElement();
+				}
+			}}>&lt;-</button
+		>
+		<button
+			on:click={(e) => {
+				e.preventDefault();
+				if (currentObservedElementIndex < $observedElements.length) {
+					currentObservedElementIndex++;
+					bindInputsWithCurrentElement();
+				}
+			}}>-&gt;</button
+		>
+	</div>
 	<br />
 	{#each $criteriaArray as criteria, indexCriteria}
 		<label for={getHtmlTagName(criteria)}>{criteria}: </label>
@@ -98,7 +100,7 @@
 		<br />
 	{/each}
 	{#if $criteriaArray.length > 0}
-		<button on:click={saveCurrentElement}>
+		<button on:click={saveCurrentElement} class="form__new">
 			{#if currentObservedElementIndex == $observedElements.length}
 				Dodaj novi element u tablicu
 			{:else}
@@ -107,3 +109,17 @@
 		</button>
 	{/if}
 </form>
+
+<style>
+	form {
+		display: flex;
+		flex-direction: column;
+	}
+	button,
+	input {
+		max-width: 300px;
+	}
+	.form__new {
+		margin-top: 20px;
+	}
+</style>

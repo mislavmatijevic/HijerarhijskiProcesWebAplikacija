@@ -24,3 +24,14 @@
 		</tbody>
 	</table>
 {/if}
+
+<style>
+	table,
+	th,
+	td {
+		padding: 5px;
+		margin-bottom: 1vh;
+		border: 1px solid greenyellow;
+		border-collapse: collapse;
+	}
+</style>
