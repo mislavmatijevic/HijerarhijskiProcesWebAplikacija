@@ -19,6 +19,7 @@
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
 	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
 	import NormalizedPairWiseComparisonMatrix from '../lib/components/NormalizedPairWiseComparisonMatrix.svelte';
+	import ChoosingCriteriaWeights from '../lib/components/ChoosingCriteriaWeights.svelte';
 
 	let pairsCount = 0;
 
@@ -67,42 +68,7 @@
 	{#if $criteriaArray === undefined}
 		<span>Pričekajte...</span>
 	{:else}
-		<h2>1. Određivanje prioriteta kriterija</h2>
-		{#each $criteriaArray as criteriaMain, indexMain}
-			{#if indexMain !== 0}
-				{#each $criteriaArray as criteriaComparison, indexComparison}
-					{#if indexMain < indexComparison}
-						<label
-							for={'select_importance_' +
-								getCurrentComparisonName(criteriaMain, criteriaComparison)}
-							>Ocjena važnosti kriterija "{@html '<strong>' + criteriaMain + '</strong>'}" s
-							kriterijem "{@html '<strong>' + criteriaComparison + '</strong>'}"</label
-						>
-						<select
-							id={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
-							bind:value={$criteriaPairwiseImportance[
-								getCurrentComparisonName(criteriaMain, criteriaComparison)
-							]}
-							on:change={refreshMatrix}
-						>
-							{#each intensityOfRelativeImportance as importanceValue, index}
-								{#if index === 0}
-									<optgroup label="Normalno" />
-								{:else if index === 9}
-									<optgroup label="Recipročno" />
-								{/if}
-								<option
-									value={importanceValue}
-									on:click={() => ($criteriaArray = [...$criteriaArray])}
-									>{importanceValue.definition} ({importanceValue.intensity})</option
-								>
-							{/each}
-						</select>
-						<br />
-					{/if}
-				{/each}
-			{/if}
-		{/each}
+		<ChoosingCriteriaWeights {refreshMatrix} />
 		{#if pairsCount !== 0 && Object.keys($criteriaPairwiseImportance).length === pairsCount && $matrix.length !== 0}
 			<PairWiseComparisonMatrix />
 			<NormalizedPairWiseComparisonMatrix />
