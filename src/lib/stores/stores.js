@@ -2,6 +2,7 @@ import { writable } from 'svelte/store';
 
 export const criteriaArray = writable(['Naziv']);
 export const observedElements = writable([]);
+export const elementCriteriaComparison = writable([]);
 
 export const criteriaPairwiseImportance = writable({});
 export const matrix = writable([]);

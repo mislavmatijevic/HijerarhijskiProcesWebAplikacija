@@ -20,6 +20,7 @@
 	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
 	import NormalizedPairWiseComparisonMatrix from '../lib/components/NormalizedPairWiseComparisonMatrix.svelte';
 	import ChoosingCriteriaWeights from '../lib/components/ChoosingCriteriaWeights.svelte';
+	import ChoosingAlternativeCriteriaWeights from '../lib/components/ChoosingAlternativeCriteriaWeights.svelte';
 
 	let pairsCount = 0;
 
@@ -81,6 +82,7 @@
 					{#if indexCriteria > 0}
 						<div>
 							<h2>{indexCriteria + 4}. ({criteria}) MAX</h2>
+							<ChoosingAlternativeCriteriaWeights {refreshMatrix} {criteria} />
 							<CriteriaComparisonTable currentCriteria={criteria} />
 						</div>
 					{/if}
