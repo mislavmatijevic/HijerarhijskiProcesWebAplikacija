@@ -71,7 +71,11 @@
 		<ChoosingCriteriaWeights {refreshMatrix} />
 		{#if pairsCount !== 0 && Object.keys($criteriaPairwiseImportance).length === pairsCount && $matrix.length !== 0}
 			<PairWiseComparisonMatrix />
-			<NormalizedPairWiseComparisonMatrix />
+			<NormalizedPairWiseComparisonMatrix
+				criteriaArray={$criteriaArray}
+				normalizedMatrix={$normalizedMatrix}
+				rowValuesSumColumn={$rowValuesSumColumn}
+			/>
 			<div class="container__criteria-comparisons">
 				{#each $criteriaArray as criteria, indexCriteria}
 					{#if indexCriteria > 0}
@@ -98,7 +102,7 @@
 	}
 	.container__criteria-comparisons {
 		display: grid;
-		grid-template: auto 1fr / auto 1fr auto;
-		gap: 10px;
+		grid-template: auto 1fr / auto 1fr;
+		gap: 50px;
 	}
 </style>

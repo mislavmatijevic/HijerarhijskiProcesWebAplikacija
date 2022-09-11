@@ -1,17 +1,28 @@
 <script>
-	import { calculateAlternativeDominationOverOther } from '../functions/matrixCalculations.js';
+	import {
+		calculateAlternativeDominationOverOther,
+		calculateWeightedSumValueColumn,
+		getRowValuesSumColumn,
+		normalizePairwiseMatrix
+	} from '../functions/matrixCalculations.js';
 
-	import { observedElements } from './../stores/stores.js';
+	import { matrix, observedElements } from './../stores/stores.js';
 	export let currentCriteria;
 	import intensities from '../data/intensityOfRelativeImportance.json';
+	import NormalizedPairWiseComparisonMatrix from './NormalizedPairWiseComparisonMatrix.svelte';
 	let dominationsIndexedRows = calculateAlternativeDominationOverOther(
 		currentCriteria,
 		$observedElements
 	);
 
 	let dominationMatrix = [];
+	let normalizedMatrix = [];
+	let rowValuesSumColumn = [];
+	let weightedSumValues = [];
+	let observedElementsName = ['Elementi']; // First element
 
 	$observedElements.forEach((observedElement, indexRow) => {
+		observedElementsName.push(observedElement.Naziv);
 		dominationMatrix.push(
 			dominationsIndexedRows.map((domination, indexColumn) => {
 				if (domination[indexRow] < 0) {
@@ -26,6 +37,15 @@
 				}
 			})
 		);
+	});
+	const refreshNormalizedMatrix = () => {
+		normalizedMatrix = normalizePairwiseMatrix(dominationMatrix);
+		rowValuesSumColumn = getRowValuesSumColumn(normalizedMatrix);
+		weightedSumValues = calculateWeightedSumValueColumn(normalizedMatrix, rowValuesSumColumn);
+	};
+
+	matrix.subscribe(() => {
+		refreshNormalizedMatrix();
 	});
 </script>
 
@@ -48,6 +68,11 @@
 			{/each}
 		</tbody>
 	</table>
+	<NormalizedPairWiseComparisonMatrix
+		criteriaArray={observedElementsName}
+		{normalizedMatrix}
+		{rowValuesSumColumn}
+	/>
 {/if}
 
 <style>

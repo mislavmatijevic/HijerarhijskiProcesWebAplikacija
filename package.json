@@ -11,14 +11,9 @@
 		"format": "prettier --write --plugin-search-dir=. ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "next",
-		"@sveltejs/kit": "next",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
 		"svelte": "^3.48.0"
 	},
-	"type": "module",
-	"dependencies": {
-		"sveltestrap": "^5.9.0"
-	}
+	"type": "module"
 }
