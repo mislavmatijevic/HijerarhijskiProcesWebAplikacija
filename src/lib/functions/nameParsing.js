@@ -5,7 +5,6 @@
  */
 export const getHtmlTagName = (criteriaName) => {
 	return (
-		'input_' +
 		criteriaName
 			.trim()
 			.replace(/\s/gi, '_')

@@ -1,15 +1,18 @@
 <script>
 	import { observedElements, elementCriteriaComparison } from '../stores/stores';
 	import intensityOfRelativeImportance from '../data/intensityOfRelativeImportance.json';
-	import { getCurrentComparisonName } from '../functions/nameParsing';
+	import { getHtmlTagName } from '../functions/nameParsing';
 	export let criteria;
 
 	export let refreshMatrix;
 
 	function getCurrentElementComparisonName(criteria, elementMain, elementComparison) {
-		return getCurrentComparisonName(
-			elementMain['Naziv'] + '_' + criteria,
-			elementComparison['Naziv'] + '_' + criteria
+		return (
+			getHtmlTagName(criteria) +
+			'__' +
+			getHtmlTagName(elementMain['Naziv']) +
+			'_' +
+			getHtmlTagName(elementComparison['Naziv'])
 		);
 	}
 </script>
@@ -25,8 +28,7 @@
 				</p>
 
 				<select
-					id={'select_element_importance_' +
-						getCurrentElementComparisonName(criteria, elementMain, elementComparison)}
+					id={getCurrentElementComparisonName(criteria, elementMain, elementComparison)}
 					bind:value={$elementCriteriaComparison[
 						getCurrentElementComparisonName(criteria, elementMain, elementComparison)
 					]}
