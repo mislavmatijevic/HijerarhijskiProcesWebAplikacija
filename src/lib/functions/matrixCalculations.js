@@ -1,4 +1,4 @@
-import { getCurrentComparisonName } from './nameParsing';
+import { getCurrentCriteriaComparisonName } from './nameParsing';
 
 /**
  * Returns intensity of this comparison pair.
@@ -11,12 +11,12 @@ import { getCurrentComparisonName } from './nameParsing';
  */
 const getPairIntensity = (criteriaOne, criteriaTwo, criteriaPairwiseImportanceObject) => {
 	let intensityValue;
-	let pairComparisonName = getCurrentComparisonName(criteriaOne, criteriaTwo);
+	let pairComparisonName = getCurrentCriteriaComparisonName(criteriaOne, criteriaTwo);
 
 	if (criteriaPairwiseImportanceObject[pairComparisonName] !== undefined) {
 		intensityValue = criteriaPairwiseImportanceObject[pairComparisonName].intensity;
 	} else {
-		pairComparisonName = getCurrentComparisonName(criteriaTwo, criteriaOne);
+		pairComparisonName = getCurrentCriteriaComparisonName(criteriaTwo, criteriaOne);
 		intensityValue = 1 / criteriaPairwiseImportanceObject[pairComparisonName]?.intensity;
 		intensityValue = parseFloat(intensityValue.toFixed(2));
 		if (criteriaPairwiseImportanceObject[pairComparisonName]?.intensity < 1) {

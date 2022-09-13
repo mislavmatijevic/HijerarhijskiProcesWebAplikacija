@@ -20,5 +20,10 @@ export const getHtmlTagName = (criteriaName) => {
  * @param {string} criteriaComparison
  * @returns Unique name for current criteria pair.
  */
-export const getCurrentComparisonName = (criteriaMain, criteriaComparison) =>
+export const getCurrentCriteriaComparisonName = (criteriaMain, criteriaComparison) =>
 	getHtmlTagName(criteriaMain) + '_' + getHtmlTagName(criteriaComparison);
+
+export const getCurrentElementComparisonName = (criteria, indexMain, indexComparison) =>
+	getHtmlTagName(criteria) +
+	'__' + indexMain +
+	'_' + indexComparison

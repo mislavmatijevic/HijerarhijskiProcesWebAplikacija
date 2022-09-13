@@ -1,5 +1,5 @@
 <script>
-	import { getCurrentComparisonName } from '../functions/nameParsing';
+	import { getCurrentCriteriaComparisonName } from '../functions/nameParsing';
 
 	export let refreshMatrix;
 
@@ -14,14 +14,16 @@
 			{#if indexMain < indexComparison}
 				<div class="selections">
 					<label
-						for={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
+						for={'select_importance_' +
+							getCurrentCriteriaComparisonName(criteriaMain, criteriaComparison)}
 						>Ocjena važnosti kriterija "{@html '<strong>' + criteriaMain + '</strong>'}" s
 						kriterijem "{@html '<strong>' + criteriaComparison + '</strong>'}"</label
 					>
 					<select
-						id={'select_importance_' + getCurrentComparisonName(criteriaMain, criteriaComparison)}
+						id={'select_importance_' +
+							getCurrentCriteriaComparisonName(criteriaMain, criteriaComparison)}
 						bind:value={$criteriaPairwiseImportance[
-							getCurrentComparisonName(criteriaMain, criteriaComparison)
+							getCurrentCriteriaComparisonName(criteriaMain, criteriaComparison)
 						]}
 						on:change={refreshMatrix}
 					>

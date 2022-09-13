@@ -1,20 +1,10 @@
 <script>
 	import { observedElements, elementCriteriaComparison } from '../stores/stores';
 	import intensityOfRelativeImportance from '../data/intensityOfRelativeImportance.json';
-	import { getHtmlTagName } from '../functions/nameParsing';
+	import { getCurrentElementComparisonName } from '../functions/nameParsing';
 	export let criteria;
 
 	export let refreshMatrix;
-
-	function getCurrentElementComparisonName(criteria, elementMain, elementComparison) {
-		return (
-			getHtmlTagName(criteria) +
-			'__' +
-			getHtmlTagName(elementMain['Naziv']) +
-			'_' +
-			getHtmlTagName(elementComparison['Naziv'])
-		);
-	}
 </script>
 
 {#each $observedElements as elementMain, indexMain}
@@ -28,9 +18,9 @@
 				</p>
 
 				<select
-					id={getCurrentElementComparisonName(criteria, elementMain, elementComparison)}
+					id={getCurrentElementComparisonName(criteria, indexMain, indexComparison)}
 					bind:value={$elementCriteriaComparison[
-						getCurrentElementComparisonName(criteria, elementMain, elementComparison)
+						getCurrentElementComparisonName(criteria, indexMain, indexComparison)
 					]}
 					on:change={refreshMatrix}
 				>
@@ -49,7 +39,7 @@
 				</select>
 			{:else}
 				{($elementCriteriaComparison[
-					getCurrentElementComparisonName(criteria, elementMain, elementComparison)
+					getCurrentElementComparisonName(criteria, indexMain, indexComparison)
 				] = 1)}
 			{/if}
 		{/if}

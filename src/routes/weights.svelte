@@ -15,7 +15,7 @@
 		getRowValuesSumColumn,
 		normalizePairwiseMatrix
 	} from './../lib/functions/matrixCalculations.js';
-	import { getCurrentComparisonName } from '../lib/functions/nameParsing';
+	import { getCurrentCriteriaComparisonName } from '../lib/functions/nameParsing';
 	import intensityOfRelativeImportance from '../lib/data/intensityOfRelativeImportance.json';
 	import PairWiseComparisonMatrix from '../lib/components/PairWiseComparisonMatrix.svelte';
 	import NormalizedPairWiseComparisonMatrix from '../lib/components/NormalizedPairWiseComparisonMatrix.svelte';
@@ -40,8 +40,9 @@
 						if (indexUpper < indexLower) {
 							pairsCount++;
 							// Set default intensity to 1 (Equally important/'Jednako važno' value).
-							$criteriaPairwiseImportance[getCurrentComparisonName(criteriaUpper, criteriaLower)] =
-								intensityOfRelativeImportance[0];
+							$criteriaPairwiseImportance[
+								getCurrentCriteriaComparisonName(criteriaUpper, criteriaLower)
+							] = intensityOfRelativeImportance[0];
 						}
 					}
 				});
